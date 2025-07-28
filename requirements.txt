@@ -1,0 +1,21 @@
+
+accelerate
+appdirs
+bitsandbytes
+black
+black[jupyter]
+datasets
+fire
+gradio
+loralib
+numpy
+pandas
+peft @ git+https://github.com/huggingface/peft.git
+requests
+scikit-learn
+sentencepiece
+sentence_transformers
+torch
+tqdm
+transformers>=4.28.0
+trl 
