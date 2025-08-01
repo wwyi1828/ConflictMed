@@ -735,20 +735,7 @@ All materials will be made publicly available to support research reproducibilit
 
 This section provides instructions for reproducing the experiments.
 
-### 1. Prerequisites: Start the Local API Service
-
-The data generation and evaluation scripts in this project depend on a local API service to get model predictions. Before running the main pipeline, you must start this service.
-
-**(Note: Please add the specific command to start your local inference server here.)**
-
-```bash
-# Example command (please replace with your actual command)
-# python src/api/server.py --model-path /path/to/your/model
-```
-
-Once started, this service should be accessible at `http://localhost:8000`.
-
-### 2. Setup
+### 1. Setup
 
 In a new terminal, set up the Python environment and install the required dependencies:
 
@@ -756,19 +743,12 @@ In a new terminal, set up the Python environment and install the required depend
 pip install -r requirements.txt
 ```
 
-### 3. Configuration
+### 2. Configuration
 
-Before running the main script, you need to configure the paths in `scripts/run_pipeline.sh`. Open this file and set the following variables:
-
-- `BASE_MODEL_PATH`: Path to the base model you want to use.
-- `RAW_DATA_PATH`: Path to your raw data file (e.g., `data/raw/your_advice.csv`).
-- `SCENARIO_PATH`: Path where the generated scenarios will be saved.
-- `DPO_DATA_PATH`: Path to the DPO data.
-- `KB_PATH`: Path to the knowledge base CSV.
-
+Before running the main script, you need to configure the paths in `scripts/run_pipeline.sh`.
 You can also adjust hyperparameters such as `NUM_EPOCHS`, `LORA_R`, etc., in this file.
 
-### 4. Execution
+### 3. Execution
 
 Once the service is running and the script is configured, you can run the entire pipeline:
 
