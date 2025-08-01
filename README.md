@@ -2,6 +2,24 @@
 
 ---
 
+## Table of Contents
+- [D. Enhanced Experimental Analysis](#d-enhanced-experimental-analysis)
+  - [D.1 Domain-Specific Medical Model Evaluation](#d1-domain-specific-medical-model-evaluation)
+  - [D.2 Hyperparameter Optimization for DPO](#d2-hyperparameter-optimization-for-dpo)
+  - [D.3 Cognitive Factor Impact Analysis](#d3-cognitive-factor-impact-analysis)
+- [E. Methodological Clarifications and Theoretical Analysis](#e-methodological-clarifications-and-theoretical-analysis)
+  - [E.1 Recommendation Intensity Category: Clinical Justification](#e1-recommendation-intensity-category-clinical-justification)
+  - [E.2 External vs. Internal Conflict Framework](#e2-external-vs-internal-conflict-framework)
+  - [E.3 Analysis of Counterintuitive Scale Effects](#e3-analysis-of-counterintuitive-scale-effects)
+- [F. Chain-of-Thought Prompting Analysis](#f-chain-of-thought-prompting-analysis)
+  - [F.1 Theoretical Framework](#f1-theoretical-framework)
+- [How to Run](#how-to-run)
+  - [1. Prerequisites: Start the Local API Service](#1-prerequisites-start-the-local-api-service)
+  - [2. Setup](#2-setup)
+  - [3. Configuration](#3-configuration)
+  - [4. Execution](#4-execution)
+---
+
 ## D. Enhanced Experimental Analysis
 
 ### D.1 Domain-Specific Medical Model Evaluation
