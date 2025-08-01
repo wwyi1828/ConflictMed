@@ -1,58 +1,4 @@
-# ConflictMedQA: Additional Supplementary Materials
-
----
-## How to Run
-
-This section provides instructions for reproducing the experiments.
-
-### 1. Prerequisites: Start the Local API Service
-
-The data generation and evaluation scripts in this project depend on a local API service to get model predictions. Before running the main pipeline, you must start this service.
-
-**(Note: Please add the specific command to start your local inference server here.)**
-
-```bash
-# Example command (please replace with your actual command)
-# python src/api/server.py --model-path /path/to/your/model
-```
-
-Once started, this service should be accessible at `http://localhost:8000`.
-
-### 2. Setup
-
-In a new terminal, set up the Python environment and install the required dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Configuration
-
-Before running the main script, you need to configure the paths in `scripts/run_pipeline.sh`. Open this file and set the following variables:
-
-- `BASE_MODEL_PATH`: Path to the base model you want to use.
-- `RAW_DATA_PATH`: Path to your raw data file (e.g., `data/raw/your_advice.csv`).
-- `SCENARIO_PATH`: Path where the generated scenarios will be saved.
-- `DPO_DATA_PATH`: Path to the DPO data.
-- `KB_PATH`: Path to the knowledge base CSV.
-
-You can also adjust hyperparameters such as `NUM_EPOCHS`, `LORA_R`, etc., in this file.
-
-### 4. Execution
-
-Once the service is running and the script is configured, you can run the entire pipeline:
-
-```bash
-bash scripts/run_pipeline.sh
-```
-
-The script will execute the following stages in order:
-
-1.  **Stage 1: Scenario Generation**: Generates evaluation scenarios from the raw data.
-2.  **Stage 2: DPO LoRA Fine-tuning**: Fine-tunes the base model using Direct Preference Optimization (DPO) with LoRA.
-3.  **Stage 3: Evaluation**: Evaluates the performance of the raw model, a RAG-enhanced model, and the DPO-tuned model.
-
-The results of the experiments will be saved in the `output/experiments` directory, as specified by the `OUTPUT_DIR` variable in the script.
+# ConflictMedQA: Code and Additional Results for Supplementary Materials
 
 ---
 
@@ -767,46 +713,58 @@ All materials will be made publicly available to support research reproducibilit
 
 ---
 
-## H. Future Research Directions
+## How to Run
 
-### H.1 Multi-Category Conflict Extension
+This section provides instructions for reproducing the experiments.
 
-Our current benchmark focuses on single-category modifications to maintain controlled difficulty. Future work could explore:
+### 1. Prerequisites: Start the Local API Service
 
-**Complex Guideline Evolution:**
-- Scenarios where recommendations evolve across multiple categories simultaneously
-- Real-world guideline tracking to validate synthetic conflict generation
-- Temporal analysis of actual medical knowledge evolution patterns
+The data generation and evaluation scripts in this project depend on a local API service to get model predictions. Before running the main pipeline, you must start this service.
 
-### H.2 Broader Domain Coverage
+**(Note: Please add the specific command to start your local inference server here.)**
 
-Extension beyond diabetes and HIV to encompass:
-- Cardiovascular medicine guidelines
-- Cancer treatment protocols
-- Psychiatric medication recommendations
-- Emergency medicine decision trees
+```bash
+# Example command (please replace with your actual command)
+# python src/api/server.py --model-path /path/to/your/model
+```
 
-### H.3 Real-World Validation Studies
+Once started, this service should be accessible at `http://localhost:8000`.
 
-**Longitudinal Evaluation:**
-- Tracking actual guideline updates over time
-- Comparing synthetic conflicts with genuine medical knowledge evolution
-- Healthcare worker validation of scenario realism and clinical relevance
+### 2. Setup
 
-**Clinical Integration Studies:**
-- Pilot testing in controlled clinical education environments
-- Assessment of LLM reliability in actual medical decision support contexts
-- Integration with electronic health record systems for real-world evaluation
+In a new terminal, set up the Python environment and install the required dependencies:
 
-### H.4 Advanced Mitigation Strategies
+```bash
+pip install -r requirements.txt
+```
 
-**Temporal Knowledge Graphs:**
-- Dynamic knowledge representation for evolving medical guidelines
-- Graph-based conflict detection and resolution
-- Automated knowledge base updating mechanisms
+### 3. Configuration
 
-**Meta-Learning Approaches:**
-- Few-shot adaptation to new medical domains
-- Transfer learning across related medical specialties
-- Continual learning frameworks for ongoing guideline evolution
+Before running the main script, you need to configure the paths in `scripts/run_pipeline.sh`. Open this file and set the following variables:
+
+- `BASE_MODEL_PATH`: Path to the base model you want to use.
+- `RAW_DATA_PATH`: Path to your raw data file (e.g., `data/raw/your_advice.csv`).
+- `SCENARIO_PATH`: Path where the generated scenarios will be saved.
+- `DPO_DATA_PATH`: Path to the DPO data.
+- `KB_PATH`: Path to the knowledge base CSV.
+
+You can also adjust hyperparameters such as `NUM_EPOCHS`, `LORA_R`, etc., in this file.
+
+### 4. Execution
+
+Once the service is running and the script is configured, you can run the entire pipeline:
+
+```bash
+bash scripts/run_pipeline.sh
+```
+
+The script will execute the following stages in order:
+
+1.  **Stage 1: Scenario Generation**: Generates evaluation scenarios from the raw data.
+2.  **Stage 2: DPO LoRA Fine-tuning**: Fine-tunes the base model using Direct Preference Optimization (DPO) with LoRA.
+3.  **Stage 3: Evaluation**: Evaluates the performance of the raw model, a RAG-enhanced model, and the DPO-tuned model.
+
+The results of the experiments will be saved in the `output/experiments` directory, as specified by the `OUTPUT_DIR` variable in the script.
+
+---
 
