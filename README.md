@@ -1,5 +1,9 @@
 # ConflictMedQA: Code and Additional Results for Supplementary Materials
 
+[![Paper](https://img.shields.io/badge/Paper-EMNLP%202025%20Findings-b31b1b?logo=adobeacrobatreader&logoColor=white)](https://aclanthology.org/anthology-files/anthology-files/pdf/findings/2025.findings-emnlp.38.pdf)
+[![Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-DriftMed-yellow)](https://huggingface.co/datasets/RDBH/DriftMed)
+[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+
 ---
 
 ## Table of Contents
@@ -13,11 +17,6 @@
   - [E.3 Analysis of Counterintuitive Scale Effects](#e3-analysis-of-counterintuitive-scale-effects)
 - [F. Chain-of-Thought Prompting Analysis](#f-chain-of-thought-prompting-analysis)
   - [F.1 Theoretical Framework](#f1-theoretical-framework)
-- [How to Run](#how-to-run)
-  - [1. Prerequisites: Start the Local API Service](#1-prerequisites-start-the-local-api-service)
-  - [2. Setup](#2-setup)
-  - [3. Configuration](#3-configuration)
-  - [4. Execution](#4-execution)
 ---
 
 ## D. Enhanced Experimental Analysis
@@ -728,41 +727,6 @@ To ensure full reproducibility, we commit to releasing:
 4. **Analysis Code**: Statistical analysis and visualization scripts
 
 All materials will be made publicly available to support research reproducibility and enable community validation of our findings.
-
----
-
-## How to Run
-
-This section provides instructions for reproducing the experiments.
-
-### 1. Setup
-
-In a new terminal, set up the Python environment and install the required dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-### 2. Configuration
-
-Before running the main script, you need to configure the paths in `scripts/run_pipeline.sh`.
-You can also adjust hyperparameters such as `NUM_EPOCHS`, `LORA_R`, etc., in this file.
-
-### 3. Execution
-
-Once the service is running and the script is configured, you can run the entire pipeline:
-
-```bash
-bash scripts/run_pipeline.sh
-```
-
-The script will execute the following stages in order:
-
-1.  **Stage 1: Scenario Generation**: Generates evaluation scenarios from the raw data.
-2.  **Stage 2: DPO LoRA Fine-tuning**: Fine-tunes the base model using Direct Preference Optimization (DPO) with LoRA.
-3.  **Stage 3: Evaluation**: Evaluates the performance of the raw model, a RAG-enhanced model, and the DPO-tuned model.
-
-The results of the experiments will be saved in the `output/experiments` directory, as specified by the `OUTPUT_DIR` variable in the script.
 
 ---
 

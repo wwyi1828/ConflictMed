@@ -1,0 +1,5 @@
+{
+    "description": "Default DPO template for medical scenario alignment evaluation.",
+    "prompt_format": "Below is a clinical scenario. Determine whether the medical recommendation aligns with current clinical guidelines.\n\n### Scenario:\n{prompt}\n\n### Answer:\n",
+    "response_split": "### Answer:"
+}

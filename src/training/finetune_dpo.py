@@ -7,22 +7,12 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.
 
 import fire
 import torch
-import transformers
 from trl import DPOTrainer, DPOConfig
-from datasets import load_dataset
-from datasets import load_from_disk
-
-"""
-Unused imports:
-import torch.nn as nn
-import bitsandbytes as bnb
-"""
+from datasets import load_dataset, load_from_disk
 
 from peft import (
     LoraConfig,
     get_peft_model,
-    get_peft_model_state_dict,
-    prepare_model_for_int8_training,
     set_peft_model_state_dict,
 )
 from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -122,14 +112,6 @@ def train(
     if len(wandb_log_model) > 0:
         os.environ["WANDB_LOG_MODEL"] = wandb_log_model
 
-    # model = LlamaForCausalLM.from_pretrained(
-    #     base_model,
-    #     load_in_8bit=load_in_8bit,
-    #     torch_dtype=torch.float16,
-    #     device_map=device_map,
-    # )
-    # tokenizer = LlamaTokenizer.from_pretrained(base_model)
-
     tokenizer = AutoTokenizer.from_pretrained(base_model, trust_remote_code=True)
     model = AutoModelForCausalLM.from_pretrained(
         base_model,
@@ -153,36 +135,12 @@ def train(
     )
     tokenizer.padding_side = "left"  # Allow batched inference
 
-    def tokenize(prompt, add_eos_token=True):
-        # there's probably a way to do this with the tokenizer settings
-        # but again, gotta move fast
-        result = tokenizer(
-            prompt,
-            truncation=True,
-            max_length=cutoff_len,
-            padding=False,
-            return_tensors=None,
-        )
-        if (
-            result["input_ids"][-1] != tokenizer.eos_token_id
-            and len(result["input_ids"]) < cutoff_len
-            and add_eos_token
-        ):
-            result["input_ids"].append(tokenizer.eos_token_id)
-            result["attention_mask"].append(1)
-
-        result["labels"] = result["input_ids"].copy()
-
-        return result
-
     def prepare_dataset(data_point):
         return {
-            "prompt": data_point["prompt"],  # 原始提示文本
-            "chosen": data_point["chosen"],  # 首选回答文本
-            "rejected": data_point["rejected"]  # 被拒绝的回答文本
+            "prompt": data_point["prompt"],
+            "chosen": data_point["chosen"],
+            "rejected": data_point["rejected"],
         }
-
-    model = prepare_model_for_int8_training(model)
 
     config = LoraConfig(
         r=lora_r,
@@ -197,10 +155,8 @@ def train(
 
     if data_path.endswith(".json") or data_path.endswith(".jsonl"):
         data = load_dataset("json", data_files=data_path)
-    else:   
+    else:
         data = load_from_disk(data_path)
-    # else:
-    #     data = load_dataset(data_path)
 
     if resume_from_checkpoint:
         # Check the available weights and load them
@@ -249,24 +205,23 @@ def train(
         warmup_steps=100,
         num_train_epochs=num_epochs,
         learning_rate=learning_rate,
-        lr_scheduler_type="cosine",  # ✅ 推荐：更平滑的下降策略
-        fp16=True,  # 若你使用的是 A100，可换成 bf16=True
+        lr_scheduler_type="cosine",
+        fp16=True,
         logging_steps=10,
-        optim="adamw_torch_fused",  # ✅ 推荐：更快更省显存（需 PyTorch >= 2.0）
-        eval_strategy="steps" if val_set_size > 0 else "no",  # 注意这里改为 evaluation_strategy
+        optim="adamw_torch_fused",
+        eval_strategy="steps" if val_set_size > 0 else "no",
         save_strategy="steps",
         eval_steps=200 if val_set_size > 0 else None,
         save_steps=200,
         output_dir=output_dir,
         save_total_limit=3,
-        load_best_model_at_end=False, 
+        load_best_model_at_end=False,
         ddp_find_unused_parameters=False if ddp else None,
         group_by_length=False,
         report_to="wandb" if use_wandb else None,
         run_name=wandb_run_name if use_wandb else None,
-        # DPO特有的参数
-        beta=beta,  # 在这里设置 beta 值
-        max_length=1024,  # 在这里设置序列最大长度
+        beta=beta,
+        max_length=1024,
     )
 
     trainer = DPOTrainer(
@@ -279,23 +234,12 @@ def train(
     )
     model.config.use_cache = False
 
-    # old_state_dict = model.state_dict
-    # model.state_dict = (
-    #     lambda self, *_, **__: get_peft_model_state_dict(
-    #         self, old_state_dict()
-    #     )
-    # ).__get__(model, type(model))
-
     if torch.__version__ >= "2" and sys.platform != "win32":
         model = torch.compile(model)
 
     trainer.train(resume_from_checkpoint=resume_from_checkpoint)
 
     model.save_pretrained(output_dir)
-
-    print(
-        "\n If there's a warning about missing keys above, please disregard :)"
-    )
 
 if __name__ == "__main__":
     fire.Fire(train)

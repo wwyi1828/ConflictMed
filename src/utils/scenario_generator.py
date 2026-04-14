@@ -151,23 +151,14 @@ For "no bias" scenarios, simple & direct reasoning.
 """
         }
 
-    def _determine_correct_answer(self, medical_advice):
-        negative_indicators = ["not", "avoid", "don't", "doesn't", "no", "never", "harmful", "against"]
-        
-        is_negative = any(term in medical_advice.lower() for term in negative_indicators)
-        return "YES"
-
     def forward(self, medical_advice, bias_type):
         if bias_type not in self.bias_guidance:
             return "Error: Invalid bias type"
-        
+
         bias_specific_guidance = self.bias_guidance.get(bias_type, "")
-        
-        correct_answer = self._determine_correct_answer(medical_advice)
-        
+
         return self.base_template.format(
             medical_advice=medical_advice,
             bias_type=bias_type,
             bias_specific_guidance=bias_specific_guidance,
-            correct_answer=correct_answer
-        ) 
+        )
