@@ -1,4 +1,4 @@
-# ConflictMedQA: Code and Additional Results for Supplementary Materials
+# Assessing and Mitigating Medical Knowledge Drift and Conflicts in Large Language Models
 
 [![Paper](https://img.shields.io/badge/Paper-EMNLP%202025%20Findings-b31b1b?logo=adobeacrobatreader&logoColor=white)](https://aclanthology.org/anthology-files/anthology-files/pdf/findings/2025.findings-emnlp.38.pdf)
 [![Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-DriftMed-yellow)](https://huggingface.co/datasets/RDBH/DriftMed)
