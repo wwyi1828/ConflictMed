@@ -7,21 +7,25 @@
 ---
 
 ## Table of Contents
-- [D. Enhanced Experimental Analysis](#d-enhanced-experimental-analysis)
-  - [D.1 Domain-Specific Medical Model Evaluation](#d1-domain-specific-medical-model-evaluation)
-  - [D.2 Hyperparameter Optimization for DPO](#d2-hyperparameter-optimization-for-dpo)
-  - [D.3 Cognitive Factor Impact Analysis](#d3-cognitive-factor-impact-analysis)
-- [E. Methodological Clarifications and Theoretical Analysis](#e-methodological-clarifications-and-theoretical-analysis)
-  - [E.1 Recommendation Intensity Category: Clinical Justification](#e1-recommendation-intensity-category-clinical-justification)
-  - [E.2 External vs. Internal Conflict Framework](#e2-external-vs-internal-conflict-framework)
-  - [E.3 Analysis of Counterintuitive Scale Effects](#e3-analysis-of-counterintuitive-scale-effects)
-- [F. Chain-of-Thought Prompting Analysis](#f-chain-of-thought-prompting-analysis)
-  - [F.1 Theoretical Framework](#f1-theoretical-framework)
+- [1. Enhanced Experimental Analysis](#1-enhanced-experimental-analysis)
+  - [1.1 Domain-Specific Medical Model Evaluation](#11-domain-specific-medical-model-evaluation)
+  - [1.2 Hyperparameter Optimization for DPO](#12-hyperparameter-optimization-for-dpo)
+  - [1.3 Cognitive Factor Impact Analysis](#13-cognitive-factor-impact-analysis)
+- [2. Methodological Clarifications and Theoretical Analysis](#2-methodological-clarifications-and-theoretical-analysis)
+  - [2.1 Recommendation Intensity Category: Clinical Justification](#21-recommendation-intensity-category-clinical-justification)
+  - [2.2 External vs. Internal Conflict Framework](#22-external-vs-internal-conflict-framework)
+  - [2.3 Analysis of Counterintuitive Scale Effects](#23-analysis-of-counterintuitive-scale-effects)
+- [3. Chain-of-Thought Prompting Analysis](#3-chain-of-thought-prompting-analysis)
+  - [3.1 Theoretical Framework](#31-theoretical-framework)
+- [4. Quality Assurance and Reproducibility](#4-quality-assurance-and-reproducibility)
+  - [4.1 Dataset Quality Validation](#41-dataset-quality-validation)
+  - [4.2 Complete Experimental Configuration](#42-complete-experimental-configuration)
+  - [4.3 Data and Code Availability](#43-data-and-code-availability)
 ---
 
-## D. Enhanced Experimental Analysis
+## 1. Enhanced Experimental Analysis
 
-### D.1 Domain-Specific Medical Model Evaluation
+### 1.1 Domain-Specific Medical Model Evaluation
 
 Following reviewer suggestions, we extended our evaluation to include specialized medical language models to assess whether domain-specific training provides advantages in handling medical knowledge conflicts.
 
@@ -47,7 +51,7 @@ Following reviewer suggestions, we extended our evaluation to include specialize
 2. **70B Models**: Domain-specific models do not consistently outperform general-purpose models of similar size in baseline performance.
 3. **Mitigation Effectiveness**: Smaller domain-specific models show greater improvement from our mitigation strategies than their larger counterparts.
 
-### D.2 Hyperparameter Optimization for DPO
+### 1.2 Hyperparameter Optimization for DPO
 
 We conducted systematic ablation studies to optimize LoRA hyperparameters for DPO fine-tuning, focusing on the rank parameter (r) while keeping alpha (α) fixed at 16.
 
@@ -64,7 +68,7 @@ We conducted systematic ablation studies to optimize LoRA hyperparameters for DP
 - Rank 16 provides optimal balance between parameter efficiency and knowledge embedding effectiveness
 - The trend suggests larger ranks enable more effective parametric knowledge injection
 
-### D.3 Cognitive Factor Impact Analysis
+### 1.3 Cognitive Factor Impact Analysis
 
 We systematically analyzed how different cognitive factors affect model performance to understand the realistic complexity introduced by our benchmark design.
 
@@ -89,11 +93,11 @@ We systematically analyzed how different cognitive factors affect model performa
 - No systematic bias toward incorrect recommendations despite factor inclusion
 - Cognitive factors successfully simulate realistic clinical complexity without compromising evaluation validity
 
-### D.4 Comprehensive Performance Visualization
+### 1.4 Comprehensive Performance Visualization
 
 To provide deeper insights into model behavior across different cognitive factors and clinical change types, we present detailed performance breakdowns across all evaluated metrics.
 
-#### D.4.1 Performance by Cognitive Factor
+#### 1.4.1 Performance by Cognitive Factor
 
 ![Cognitive Factor Analysis - ECDA Adherence](assets/fig_bias_ecda_adh.png)
 
@@ -111,7 +115,7 @@ To provide deeper insights into model behavior across different cognitive factor
 
 **Figure D4**: Internal Knowledge Conflict Ratio (IKCR) across cognitive factors. Lower values indicate better internal consistency, with "No Factor" serving as the baseline condition.
 
-#### D.4.2 Performance by Clinical Change Type
+#### 1.4.2 Performance by Clinical Change Type
 
 ![Clinical Change Analysis - ECDA Adherence](assets/fig_change_ecda_adh.png)
 
@@ -143,7 +147,7 @@ To provide deeper insights into model behavior across different cognitive factor
 4. **Consistency Across Metrics**: The patterns observed in individual metrics (ECDAadh, ECDArej) are reflected in the overall performance (ECDAall), demonstrating the robustness of our evaluation framework.
 
 The tables below detail mitigation effects across different models, clinical factors, and advice change types.
-**Table D1: Mitigation Strategy Performance Comparison (Overall)**
+**Table 1: Mitigation Strategy Performance Comparison (Overall)**
 
 | Model | Strategy | IKCR | ECDA_all | ECDA_adh | ECDA_rej |
 | --- | --- | --- | --- | --- | --- |
@@ -168,7 +172,7 @@ The tables below detail mitigation effects across different models, clinical fac
 | Qwen2.5-72B | Base | 0.710 | 0.597 | 0.916 | 0.278 |
 |   | RAG | 0.729 (+0.019) | 0.624 (+0.027) | 0.982 (+0.066) | 0.266 (-0.012) |
 
-**Table D2.1: Mitigation Performance for Confirmation Factor**
+**Table 2.1: Mitigation Performance for Confirmation Factor**
 
 | Model | Strategy | IKCR | ECDA_all | ECDA_adh | ECDA_rej |
 | --- | --- | --- | --- | --- | --- |
@@ -193,7 +197,7 @@ The tables below detail mitigation effects across different models, clinical fac
 | Qwen2.5-72B | Base | 0.742 | 0.595 | 0.944 | 0.246 |
 |   | RAG | 0.732 (-0.010) | 0.633 (+0.038) | 0.995 (+0.051) | 0.272 (+0.026) |
 
-**Table D2.2: Mitigation Performance for Cultural Factor**
+**Table 2.2: Mitigation Performance for Cultural Factor**
 
 | Model | Strategy | IKCR | ECDA_all | ECDA_adh | ECDA_rej |
 | --- | --- | --- | --- | --- | --- |
@@ -218,7 +222,7 @@ The tables below detail mitigation effects across different models, clinical fac
 | Qwen2.5-72B | Base | 0.700 | 0.595 | 0.923 | 0.267 |
 |   | RAG | 0.687 (-0.013) | 0.651 (+0.056) | 0.995 (+0.072) | 0.308 (+0.041) |
 
-**Table D2.3: Mitigation Performance for False Consensus Factor**
+**Table 2.3: Mitigation Performance for False Consensus Factor**
 
 | Model | Strategy | IKCR | ECDA_all | ECDA_adh | ECDA_rej |
 | --- | --- | --- | --- | --- | --- |
@@ -243,7 +247,7 @@ The tables below detail mitigation effects across different models, clinical fac
 | Qwen2.5-72B | Base | 0.690 | 0.613 | 0.923 | 0.303 |
 |   | RAG | 0.686 (-0.004) | 0.636 (+0.023) | 0.974 (+0.051) | 0.297 (-0.005) |
 
-**Table D2.4: Mitigation Performance for Frequency Factor**
+**Table 2.4: Mitigation Performance for Frequency Factor**
 
 | Model | Strategy | IKCR | ECDA_all | ECDA_adh | ECDA_rej |
 | --- | --- | --- | --- | --- | --- |
@@ -268,7 +272,7 @@ The tables below detail mitigation effects across different models, clinical fac
 | Qwen2.5-72B | Base | 0.734 | 0.603 | 0.939 | 0.267 |
 |   | RAG | 0.768 (+0.034) | 0.600 (-0.003) | 0.980 (+0.041) | 0.221 (-0.046) |
 
-**Table D2.5: Mitigation Performance for Geographic Factor**
+**Table 2.5: Mitigation Performance for Geographic Factor**
 
 | Model | Strategy | IKCR | ECDA_all | ECDA_adh | ECDA_rej |
 | --- | --- | --- | --- | --- | --- |
@@ -293,7 +297,7 @@ The tables below detail mitigation effects across different models, clinical fac
 | Qwen2.5-72B | Base | 0.699 | 0.613 | 0.923 | 0.303 |
 |   | RAG | 0.810 (+0.111) | 0.595 (-0.018) | 1.000 (+0.077) | 0.190 (-0.113) |
 
-**Table D2.6: Mitigation Performance for No Factor**
+**Table 2.6: Mitigation Performance for No Factor**
 
 | Model | Strategy | IKCR | ECDA_all | ECDA_adh | ECDA_rej |
 | --- | --- | --- | --- | --- | --- |
@@ -318,7 +322,7 @@ The tables below detail mitigation effects across different models, clinical fac
 | Qwen2.5-72B | Base | 0.690 | 0.595 | 0.918 | 0.272 |
 |   | RAG | 0.725 (+0.036) | 0.631 (+0.036) | 0.985 (+0.067) | 0.277 (+0.005) |
 
-**Table D2.7: Mitigation Performance for Racial/Ethnic Factor**
+**Table 2.7: Mitigation Performance for Racial/Ethnic Factor**
 
 | Model | Strategy | IKCR | ECDA_all | ECDA_adh | ECDA_rej |
 | --- | --- | --- | --- | --- | --- |
@@ -343,7 +347,7 @@ The tables below detail mitigation effects across different models, clinical fac
 | Qwen2.5-72B | Base | 0.707 | 0.556 | 0.862 | 0.251 |
 |   | RAG | 0.714 (+0.007) | 0.626 (+0.069) | 0.969 (+0.108) | 0.282 (+0.031) |
 
-**Table D2.8: Mitigation Performance for Recency Factor**
+**Table 2.8: Mitigation Performance for Recency Factor**
 
 | Model | Strategy | IKCR | ECDA_all | ECDA_adh | ECDA_rej |
 | --- | --- | --- | --- | --- | --- |
@@ -368,7 +372,7 @@ The tables below detail mitigation effects across different models, clinical fac
 | Qwen2.5-72B | Base | 0.679 | 0.610 | 0.903 | 0.318 |
 |   | RAG | 0.712 (+0.033) | 0.621 (+0.010) | 0.959 (+0.056) | 0.282 (-0.036) |
 
-**Table D2.9: Mitigation Performance for Self-Diagnosis Factor**
+**Table 2.9: Mitigation Performance for Self-Diagnosis Factor**
 
 | Model | Strategy | IKCR | ECDA_all | ECDA_adh | ECDA_rej |
 | --- | --- | --- | --- | --- | --- |
@@ -393,7 +397,7 @@ The tables below detail mitigation effects across different models, clinical fac
 | Qwen2.5-72B | Base | 0.718 | 0.569 | 0.867 | 0.272 |
 |   | RAG | 0.723 (+0.005) | 0.633 (+0.064) | 0.995 (+0.128) | 0.272 (+0.000) |
 
-**Table D2.10: Mitigation Performance for Socioeconomic Factor**
+**Table 2.10: Mitigation Performance for Socioeconomic Factor**
 
 | Model | Strategy | IKCR | ECDA_all | ECDA_adh | ECDA_rej |
 | --- | --- | --- | --- | --- | --- |
@@ -418,7 +422,7 @@ The tables below detail mitigation effects across different models, clinical fac
 | Qwen2.5-72B | Base | 0.743 | 0.613 | 0.949 | 0.277 |
 |   | RAG | 0.758 (+0.014) | 0.610 (-0.003) | 0.985 (+0.036) | 0.236 (-0.041) |
 
-**Table D2.11: Mitigation Performance for Status Quo Factor**
+**Table 2.11: Mitigation Performance for Status Quo Factor**
 
 | Model | Strategy | IKCR | ECDA_all | ECDA_adh | ECDA_rej |
 | --- | --- | --- | --- | --- | --- |
@@ -443,7 +447,7 @@ The tables below detail mitigation effects across different models, clinical fac
 | Qwen2.5-72B | Base | 0.711 | 0.608 | 0.928 | 0.287 |
 |   | RAG | 0.703 (-0.008) | 0.631 (+0.023) | 0.969 (+0.041) | 0.292 (+0.005) |
 
-**Table D3.1: Mitigation Performance for Clinical Context Adaptations**
+**Table 3.1: Mitigation Performance for Clinical Context Adaptations**
 
 | Model | Strategy | IKCR | ECDA_all | ECDA_adh | ECDA_rej |
 | --- | --- | --- | --- | --- | --- |
@@ -468,7 +472,7 @@ The tables below detail mitigation effects across different models, clinical fac
 | Qwen2.5-72B | Base | 0.686 | 0.579 | 0.876 | 0.281 |
 |   | RAG | 0.696 (+0.010) | 0.634 (+0.056) | 0.975 (+0.099) | 0.293 (+0.012) |
 
-**Table D3.2: Mitigation Performance for Diagnostic & Threshold Adjustments**
+**Table 3.2: Mitigation Performance for Diagnostic & Threshold Adjustments**
 
 | Model | Strategy | IKCR | ECDA_all | ECDA_adh | ECDA_rej |
 | --- | --- | --- | --- | --- | --- |
@@ -493,7 +497,7 @@ The tables below detail mitigation effects across different models, clinical fac
 | Qwen2.5-72B | Base | 0.714 | 0.604 | 0.920 | 0.288 |
 |   | RAG | 0.739 (+0.025) | 0.620 (+0.016) | 0.978 (+0.058) | 0.262 (-0.026) |
 
-**Table D3.3: Mitigation Performance for Implementation Approach Revisions**
+**Table 3.3: Mitigation Performance for Implementation Approach Revisions**
 
 | Model | Strategy | IKCR | ECDA_all | ECDA_adh | ECDA_rej |
 | --- | --- | --- | --- | --- | --- |
@@ -518,7 +522,7 @@ The tables below detail mitigation effects across different models, clinical fac
 | Qwen2.5-72B | Base | 0.754 | 0.590 | 0.949 | 0.230 |
 |   | RAG | 0.747 (-0.006) | 0.618 (+0.028) | 0.992 (+0.043) | 0.244 (+0.014) |
 
-**Table D3.4: Mitigation Performance for Recommendation Intensity Modifications**
+**Table 3.4: Mitigation Performance for Recommendation Intensity Modifications**
 
 | Model | Strategy | IKCR | ECDA_all | ECDA_adh | ECDA_rej |
 | --- | --- | --- | --- | --- | --- |
@@ -543,7 +547,7 @@ The tables below detail mitigation effects across different models, clinical fac
 | Qwen2.5-72B | Base | 0.668 | 0.601 | 0.895 | 0.307 |
 |   | RAG | 0.696 (+0.027) | 0.639 (+0.038) | 0.979 (+0.084) | 0.298 (-0.009) |
 
-**Table D3.5: Mitigation Performance for Treatment Modality Shifts**
+**Table 3.5: Mitigation Performance for Treatment Modality Shifts**
 
 | Model | Strategy | IKCR | ECDA_all | ECDA_adh | ECDA_rej |
 | --- | --- | --- | --- | --- | --- |
@@ -570,9 +574,9 @@ The tables below detail mitigation effects across different models, clinical fac
 
 ---
 
-## E. Methodological Clarifications and Theoretical Analysis
+## 2. Methodological Clarifications and Theoretical Analysis
 
-### E.1 Recommendation Intensity Category: Clinical Justification
+### 2.1 Recommendation Intensity Category: Clinical Justification
 
 Addressing concerns about the clinical validity of "recommendation intensity" modifications, we provide detailed justification for this category's inclusion and its impact on our benchmark.
 
@@ -592,7 +596,7 @@ While intensity variations such as "should recommend" versus "may consider" are 
 
 This represents a meaningful clinical conflict affecting patient outcomes and public health recommendations, constituting 27.2% of our dataset scenarios.
 
-### E.2 External vs. Internal Conflict Framework
+### 2.2 External vs. Internal Conflict Framework
 
 We provide formal definitions to clarify our conflict detection methodology:
 
@@ -607,7 +611,7 @@ Assessed using paired scenarios where simultaneous endorsement indicates interna
 - Internal conflict occurs when: Model(S_i,current) = Endorse AND Model(S_i,outdated) = Endorse
 - IKCR quantifies frequency of such contradictions across all active pairs
 
-### E.3 Analysis of Counterintuitive Scale Effects
+### 2.3 Analysis of Counterintuitive Scale Effects
 
 Our investigation revealed unexpected patterns where larger models sometimes underperform smaller variants, particularly in rejection tasks.
 
@@ -637,9 +641,9 @@ This analysis suggests that medical LLM evaluation requires careful consideratio
 
 ---
 
-## F. Chain-of-Thought Prompting Analysis
+## 3. Chain-of-Thought Prompting Analysis
 
-### F.1 Theoretical Framework
+### 3.1 Theoretical Framework
 
 Chain-of-thought (CoT) prompting represents a complementary approach to our mitigation strategies, with distinct advantages and limitations:
 
@@ -665,7 +669,7 @@ Our methodology focuses on **parametric knowledge injection** through DPO, which
 CoT prompting could be integrated with our RoD framework for additional performance gains:
 This represents a complementary rather than competing approach to knowledge conflict resolution.
 
-### F.2 Empirical Considerations
+### 3.2 Empirical Considerations
 
 While we did not systematically evaluate CoT prompting in this study, our framework provides the foundation for such investigation:
 
@@ -677,9 +681,9 @@ While we did not systematically evaluate CoT prompting in this study, our framew
 
 ---
 
-## G. Quality Assurance and Reproducibility
+## 4. Quality Assurance and Reproducibility
 
-### G.1 Dataset Quality Validation
+### 4.1 Dataset Quality Validation
 
 We implemented comprehensive quality assurance measures to ensure benchmark reliability:
 
@@ -695,7 +699,7 @@ We implemented comprehensive quality assurance measures to ensure benchmark reli
 - Medical advice faithfully represented in generated scenarios
 - Cognitive factors appropriately integrated without systematic bias introduction
 
-### G.2 Complete Experimental Configuration
+### 4.2 Complete Experimental Configuration
 
 **Standardized Generation Parameters:**
 | Parameter | Value | Rationale |
@@ -717,7 +721,7 @@ We implemented comprehensive quality assurance measures to ensure benchmark reli
 - Training objective: 100% accuracy on preference pairs
 - Rationale: Ensure complete parametric knowledge memorization before scenario evaluation
 
-### G.3 Data and Code Availability
+### 4.3 Data and Code Availability
 
 To ensure full reproducibility, we commit to releasing:
 
